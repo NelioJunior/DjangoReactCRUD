@@ -29,9 +29,7 @@ export const UpdateMenu = () => {
   const retrieveMenu = () => {
     axios
       .get(`${baseURL}/menu/${id}/`, {
-        headers: {
-          headers,
-        },
+        headers: headers
       })
       .then((response) => {
         setCurrentMenu({
@@ -56,9 +54,7 @@ export const UpdateMenu = () => {
 
     axios
       .put(`${baseURL}/menu/${id}/`, data, {
-        headers: {
-          headers,
-        },
+        headers: headers
       })
       .then((response) => {
         setCurrentMenu({

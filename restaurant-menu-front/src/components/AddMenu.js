@@ -27,9 +27,7 @@ export const AddMenu = () => {
 
     axios
       .post(`${baseURL}/menu/`, data, {
-        headers: {
-          headers,
-        },
+         headers: headers
       })
       .then((response) => {
         setMenu({

@@ -11,15 +11,28 @@ export const MenuList = () => {
   const [deleted, setDeleted] = useState(false);
 
   useEffect(() => {
-    retrieveAllMenus();
+    retrieveAllMenusOld();
   }, [countRef]);
 
+
   const retrieveAllMenus = () => {
+     axios
+      .get(`${baseURL}/menu/`, {
+          header: headers
+      })
+      .then((response) => {
+          setMenus(response.data);
+      })
+      .catch((err) => {
+           console.error("ops! ocorreu um erro" + err);
+      });
+  }
+
+
+  const retrieveAllMenusOld = () => {
     axios
       .get(`${baseURL}/menu/`, {
-        headers: {
-          headers,
-        },
+        headers: headers 
       })
       .then((response) => {
         setMenus(response.data);
@@ -33,9 +46,7 @@ export const MenuList = () => {
   const deleteMenu = (id) => {
     axios
       .delete(`${baseURL}/menu/${id}/`, {
-        headers: {
-          headers,
-        },
+        headers: headers
       })
       .then((response) => {
         setDeleted(true);
@@ -71,35 +82,26 @@ export const MenuList = () => {
 
         {menus &&
           menus.map((menu, index) => (
-            <div className="card my-3 w-25 mx-auto">
+            <div className="card my-4 w-90 mx-auto">
               <div className="card-body">
                 <h2 className="card-title font-weight-bold">{menu.name}</h2>
                 <h4 className="card-subtitle mb-2">{menu.price}</h4>
                 <p className="card-text">{menu.description}</p>
               </div>
-              <div classNameName="card-footer">
-                <div
-                  className="btn-group justify-content-around w-75 mb-1 "
-                  data-toggle="buttons"
-                >
+              <center classNameName="card-footer">              
+                <div className="btn-group justify-content-around w-70 mb-4" data-toggle="buttons">
                   <span>
-                    <button
-                      className="btn btn-info"
-                      onClick={() => handleUpdateClick(menu.id)}
-                    >
+                    <button  className="btn btn-info" onClick={() => handleUpdateClick(menu.id)}>
                       Update
                     </button>
                   </span>
                   <span>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => deleteMenu(menu.id)}
-                    >
+                    <button className="btn btn-danger" onClick={() => deleteMenu(menu.id)}>
                       Delete
                     </button>
                   </span>
                 </div>
-              </div>
+              </center>
             </div>
           ))}
       </div>
